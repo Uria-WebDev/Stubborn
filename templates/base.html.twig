@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome !{% endblock %}</title>
+    <link rel="icon" href="data:images/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 0">
+
+    {% block stylesheets %}
+        {{ encore_entry_link('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_scripts_tags('app') }}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+  </body>
+</html>
