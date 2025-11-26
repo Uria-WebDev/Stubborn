@@ -1,0 +1,15 @@
+body {
+    background-color: lightgray;
+}
+
+.margin-top-10 {
+    margin-top: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.border-bottom-dark {
+    border-bottom: 1px solid black;
+}
