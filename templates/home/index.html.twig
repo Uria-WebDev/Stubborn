@@ -2,6 +2,25 @@
 
 {% block title %}Stubborn - Accueil{% endblock %}
 
-{% block body %}
-
+{% block home %}
+    <div class="row gap-4">
+        {% for product in products %}
+            <div class="col-md border-dark">
+                <div class="container">
+                    <div class="d-flex justify-content-center margin-top-3 margin-bottom-3">
+                        <img src="{{ asset('img/Product/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid border-dark">
+                    </div>
+                    <div class="row justify-content-between align-items-center">
+                        <p class="col">
+                            {{ product.name }}</br>
+                            {{ product.price }}€
+                        </p>
+                        <a href="{{ path('app_home') }}" class="col btn btn-primary">Voir</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun produit trouvé.</p>
+        {% endfor %}
+    </div>
 {% endblock %}
