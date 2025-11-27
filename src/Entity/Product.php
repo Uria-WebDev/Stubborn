@@ -14,6 +14,9 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    private ?string $image = null;
+
+    #[ORM\Column(length: 50)]
     private ?string $name = null;
 
     #[ORM\Column(length: 50)]
@@ -22,6 +25,17 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+        return $this;
     }
 
     public function getName(): ?string
