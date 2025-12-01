@@ -19,8 +19,8 @@
     {% block body %}
       <!-- HEADER -->
       <header class="border-bottom-dark">
-          <div class="container margin-top-10">
-              <div class="row">
+          <div class="container">
+              <div class="row justify-content-between align-items-center">
                   <div class="col-md-7">
                       <!-- Logo -->
                       <a href="/">
@@ -33,7 +33,7 @@
                   <!-- Barre de navigation -->
                   <div class="col-md-5">
                       <nav class="row text-center">
-                          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <!-- Utilisateur connecté -->
                             <a href="{{ path('app_home') }}" class="col-md">Accueil</a>
                             <a href="{{ path('app_shop') }}" class="col-md">Boutique</a>
@@ -51,13 +51,14 @@
           </div>
       </header>
 
-      <main class="container margin-top-10">
+      <main class="container margin-top-20">
         {% block home %}{% endblock %}
+        {% block shop %}{% endblock %}
       </main>
 
       <!-- FOOTER -->
-      <footer class="border-top-dark margin-top-10">
-          <div class="container margin-top-10">
+      <footer class="border-top-dark margin-top-20">
+          <div class="container margin-top-20 margin-bottom-20">
               <small>Stubborn</small></br>
               <small><a href="https://www.google.com/maps/place/Piccadilly+Circus,+London,+Royaume-Uni/@51.509863,-0.1368558,17z/data=!3m1!4b1!4m6!3m5!1s0x487604d3ff201fc1:0xf08adf0cfb3eb2fe!8m2!3d51.5098597!4d-0.1342809!16zL20vMDFoYzZx?entry=ttu&g_ep=EgoyMDI1MTExMi4wIKXMDSoASAFQAw%3D%3D">
                   Piccadilly Circus, London W1J 0DA, Royaume-Uni

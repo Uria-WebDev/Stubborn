@@ -1,3 +1,52 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Stubborn - Boutique{% endblock %}
+
+{% block shop %}
+    <div class="row gap-4">
+
+        <!-- Tri par tranche de prix -->
+        <div class="col-md-2">
+            <p>Fourchette de prix</p>
+
+            <ul class="list-group">
+                <a href="{{ path('app_shop', { price_range: '10-30' }) }}"
+                class="list-group-item {{ app.request.get('price_range') == '10-30' ? 'active' }}">
+                    10 à 29 €
+                </a>
+
+                <a href="{{ path('app_shop', { price_range: '30-35' }) }}"
+                class="list-group-item {{ app.request.get('price_range') == '30-35' ? 'active' }}">
+                    30 à 35 €
+                </a>
+
+                <a href="{{ path('app_shop', { price_range: '35-50' }) }}"
+                class="list-group-item {{ app.request.get('price_range') == '35-50' ? 'active' }}">
+                    35 à 50 €
+                </a>
+            </ul>
+        </div>
+
+        <!-- Produits triées -->
+        <div class="col-md-10 row gap-4">
+            {% for product in products %}
+                <div class="col-md-5 border-dark">
+                    <div class="container">
+                        <div class="d-flex justify-content-center margin-top-10 margin-bottom-10">
+                            <img src="{{ asset('img/Product/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid border-dark">
+                        </div>
+                        <div class="row justify-content-between align-items-center">
+                            <p class="col">
+                                {{ product.name }}</br>
+                                {{ product.price }}€
+                            </p>
+                            <a href="#" class="col btn btn-primary">Voir</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun produit trouvé.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
