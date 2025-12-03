@@ -16,6 +16,10 @@ class Size
     #[ORM\Column(length: 50)]
     private ?string $label = null;
 
+    #[ORM\ManyToOne(targetEntity: Stock::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Stock $stock = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,17 @@ class Size
     public function setLabel(string $label): static
     {
         $this->label = $label;
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): static
+    {
+        $this->stock = $stock;
         return $this;
     }
 }

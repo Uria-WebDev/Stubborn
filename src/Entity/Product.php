@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -21,6 +23,14 @@ class Product
 
     #[ORM\Column(type: "float")]
     private ?float $price = null;
+
+    #[ORM\ManyToMany(targetEntity: Size::class)]
+    private Collection $sizes;
+
+    public function __construct()
+    {
+        $this->sizes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -49,14 +59,33 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(string $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
+        return $this;
+    }
+
+    public function getSizes(): Collection
+    {
+        return $this->sizes;
+    }
+
+    public function addSize(Size $size): static
+    {
+        if (!$this->sizes->contains($size)) {
+            $this->sizes->add($size);
+        }
+        return $this;
+    }
+
+    public function removeSize(Size $size): static
+    {
+        $this->sizes->removeElement($size);
         return $this;
     }
 }

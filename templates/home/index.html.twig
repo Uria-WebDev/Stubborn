@@ -12,10 +12,14 @@
                     </div>
                     <div class="row justify-content-between align-items-center">
                         <p class="col">
-                            {{ product.name }}</br>
+                            <strong>{{ product.name }}</strong></br>
                             {{ product.price }}€
                         </p>
-                        <a href="#" class="col btn btn-primary">Voir</a>
+
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a href="{{ path('app_product', { id: product.id }) }}" class="col btn btn-primary">Voir</a>
+                        {% else %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
