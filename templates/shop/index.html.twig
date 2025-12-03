@@ -7,7 +7,7 @@
 
         <!-- Tri par tranche de prix -->
         <div class="col-md-2">
-            <p>Fourchette de prix</p>
+            <p><strong>Fourchette de prix</strong><p>
 
             <ul class="list-group">
                 <a href="{{ path('app_shop', { price_range: '10-30' }) }}"
@@ -37,10 +37,10 @@
                         </div>
                         <div class="row justify-content-between align-items-center">
                             <p class="col">
-                                {{ product.name }}</br>
+                                <strong>{{ product.name }}</strong></br>
                                 {{ product.price }}€
                             </p>
-                            <a href="#" class="col btn btn-primary">Voir</a>
+                            <a href="{{ path('app_product', { id: product.id }) }}" class="col btn btn-primary">Voir</a>
                         </div>
                     </div>
                 </div>
