@@ -24,12 +24,28 @@ body {
     margin-top: 20px;
 }
 
+.margin-top-50 {
+    margin-top: 50px;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0px;
+}
+
 .margin-bottom-10 {
     margin-bottom: 10%;
 }
 
 .margin-bottom-20 {
     margin-bottom: 20px;
+}
+
+.padding-top-20 {
+    padding-top: 20px;
+}
+
+.padding-bottom-20 {
+    padding-bottom: 20px;
 }
 
 .text-center {
@@ -46,6 +62,10 @@ body {
 
 .border-bottom-dark {
     border-bottom: 1px solid black;
+}
+
+.border-bottom-blue {
+    border-bottom: 1px solid lightblue;
 }
 
 .decoration-none {
