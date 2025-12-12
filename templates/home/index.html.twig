@@ -3,12 +3,14 @@
 {% block title %}Stubborn - Accueil{% endblock %}
 
 {% block home %}
+
+    <!-- Produits mis en avant -->
     <div class="row gap-4">
         {% for product in products %}
-            <div class="col-md border-dark">
+            <div class="col-md background-white border-dark">
                 <div class="container">
                     <div class="d-flex justify-content-center margin-top-10 margin-bottom-10">
-                        <img src="{{ asset('img/Product/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid border-dark">
+                        <img src="{{ asset('img/Product/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid">
                     </div>
                     <div class="row justify-content-between align-items-center">
                         <p class="col">

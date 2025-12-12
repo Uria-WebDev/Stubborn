@@ -29,18 +29,16 @@
 
                 <ul class="list-group">
                     {% for size in product.sizes %}
-                        <a href="#" class="list-group-item size-item" data-size-id="{{ size.id }}">
+                        <a href="#" class="list-group-item size-item" data-size="{{ size.label }}">
                             {{ size.label }}
                         </a>
                     {% endfor %}
                 </ul>
 
-                <input type="hidden" name="size_id" id="selected-size">
-
                 <script>
                 document.querySelectorAll('.size-item').forEach(el => {
                     el.addEventListener('click', () => {
-                        document.getElementById('selected-size').value = el.dataset.sizeId;
+                        document.getElementById('selected-size').value = el.dataset.size;
                         document.querySelectorAll('.size-item').forEach(li => li.classList.remove('active'));
                         el.classList.add('active');
                     });
@@ -49,7 +47,12 @@
             </div>
         </div>
 
-        <a href="#" class="btn btn-primary mt-3 width-100">Ajouter au panier</a>
+        <form action="{{ path('cart_add') }}" method="POST">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <input type="hidden" name="size" id="selected-size">
+
+            <button type="submit" class="btn btn-primary mt-3 width-100">Ajouter au panier</button>
+        </form>
     </div>
 
 </div>
