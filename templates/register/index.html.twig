@@ -2,52 +2,55 @@
 
 {% block title %}Stubborn - S'inscrire{% endblock %}
 
-{% block login %}
+{% block register %}
+<div class="row">
+    <div class="col-4"></div>
 
-    <!-- Formulaire d'inscription -->
-    <div class="row">
-        <div class="col-4"></div>
-        <form class="col-4 border-dark margin-top-10 margin-bottom-10 padding-top-20 padding-bottom-20 background-white">
+    {{ form_start(registrationForm, {
+        'attr': {
+            'class': 'col-4 border-dark margin-top-10 margin-bottom-10 padding-top-20 padding-bottom-20 background-white'
+        }
+    }) }}
 
-            <p class="padding-bottom-20 border-bottom-blue">S'inscrire</p>
+        <p class="padding-bottom-20 border-bottom-blue">S'inscrire</p>
 
-            <div class="margin-top-20">
-                <label>Nom d'utilisateur :</label></br>
-                <input></input>
-            <div>
+        <div class="margin-top-20">
+            {{ form_label(registrationForm.username, 'Nom d\'utilisateur :') }}
+            {{ form_widget(registrationForm.username) }}
+            {{ form_errors(registrationForm.username) }}
+        </div>
 
-            <div class="margin-top-20">
-                <label>Adresse mail :</label></br>
-                <input></input>
+        <div class="margin-top-20">
+            {{ form_label(registrationForm.email, 'Adresse mail :') }}
+            {{ form_widget(registrationForm.email) }}
+            {{ form_errors(registrationForm.email) }}
+        </div>
+
+        <div class="margin-top-20">
+            {{ form_label(registrationForm.address, 'Adresse de livraison :') }}
+            {{ form_widget(registrationForm.address) }}
+            {{ form_errors(registrationForm.address) }}
+        </div>
+
+        <div class="margin-top-50">
+            {{ form_label(registrationForm.plainPassword, 'Mot de passe :') }}
+            {{ form_widget(registrationForm.plainPassword) }}
+            {{ form_errors(registrationForm.plainPassword) }}
+        </div>
+
+        <div class="margin-top-20 padding-bottom-20 border-bottom-blue text-center">
+            <button type="submit" class="btn btn-primary">Créer un compte</button>
+        </div>
+
+        <div class="margin-top-20">
+            <p class="margin-bottom-0">Déjà inscrit ?</p>
+            <div class="text-center">
+                <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
             </div>
+        </div>
 
-            <div class="margin-top-20">
-                <label>Adresse de livraison :</label></br>
-                <input></input>
-            </div>
+    {{ form_end(registrationForm) }}
 
-            <div class="margin-top-50">
-                <label>Mot de passe :</label></br>
-                <input></input>
-            </div>
-
-            <div class="margin-top-20">
-                <label>Confirmer le mot de passe :</label></br>
-                <input></input>
-            </div>
-
-            <div class="margin-top-20 padding-bottom-20 border-bottom-blue text-center">
-                <a href="#" class="btn btn-primary">Créer un compte</a></br>
-            </div>
-
-            <div class="margin-top-20">
-                <p class="margin-bottom-0">Déjà inscrit ?</p></br>
-                <div class="text-center">
-                    <a href="{{ path('app_login') }}" class="btn btn-primary">Se Connecter</a>
-                </div>
-            </div>
-
-        </form>
-        <div class="col-4"></div>
-    </div>
+    <div class="col-4"></div>
+</div>
 {% endblock %}

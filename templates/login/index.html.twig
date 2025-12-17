@@ -4,38 +4,46 @@
 
 {% block login %}
 
-    <!-- Formulaire de connection -->
-    <div class="row">
-        <div class="col-4"></div>
-        <form class="col-4 border-dark margin-top-10 margin-bottom-10 padding-top-20 padding-bottom-20 background-white">
+<div class="row">
+    <div class="col-4"></div>
 
-            <p class="padding-bottom-20 border-bottom-blue">Se connecter</p>
+    <form method="post" action="{{ path('app_login') }}" class="col-4 border-dark margin-top-10 margin-bottom-10 padding-top-20 padding-bottom-20 background-white">
 
-            <div class="margin-top-20">
-                <label>Nom d'utilisateur</label></br>
-                <input></input>
-            <div>
+        <p class="padding-bottom-20 border-bottom-blue">Se connecter</p>
 
-            <div class="margin-top-20">
-                <label>Mot de passe</label></br>
-                <input></input>
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
+        {% endif %}
 
-            <div class="margin-top-20 padding-bottom-20 border-bottom-blue">
-                <div class="text-center">
-                    <a hreh="#" class="btn btn-primary">Se Connecter</a></br>
-                </div>
-                <a href="#"><small>Mot de passe oublié ?</small></a>
+        <div class="margin-top-20">
+            <label for="inputUsername">Nom d'utilisateur</label><br>
+            <input type="text" name="_username" id="inputUsername" value="{{ last_username }}" class="form-control" autocomplete="username" required autofocus>
+        </div>
+
+        <div class="margin-top-20">
+            <label for="inputPassword">Mot de passe</label><br>
+            <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <div class="margin-top-20 padding-bottom-20 border-bottom-blue text-center">
+            <button type="submit" class="btn btn-primary">Se Connecter</button><br>
+            <a href="#"><small>Mot de passe oublié ?</small></a>
+        </div>
+
+        <div class="margin-top-20">
+            <p class="margin-bottom-0">Pas encore inscrit ?</p><br>
+            <div class="text-center">
+                <a href="{{ path('app_register') }}" class="btn btn-primary">Créer un compte</a>
             </div>
+        </div>
 
-            <div class="margin-top-20">
-                <p class="margin-bottom-0">Pas encore inscrit ?</p></br>
-                <div class="text-center">
-                    <a href="{{ path('app_register') }}" class="btn btn-primary">Créer un compte</a>
-                </div>
-            </div>
+    </form>
 
-        </form>
-        <div class="col-4"></div>
-    </div>
+    <div class="col-4"></div>
+</div>
+
 {% endblock %}
