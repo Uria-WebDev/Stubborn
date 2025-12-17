@@ -35,7 +35,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart_show');
     }
 
-    #[Route('/cart', name: 'cart_show')]
+    #[Route('/cart', name: 'app_cart')]
     public function show(CartService $cartService): Response
     {
         return $this->render('cart/index.html.twig', [

@@ -39,7 +39,13 @@
                             <a href="{{ path('app_home') }}" class="col-md decoration-none decoration-hov">Accueil</a>
                             <a href="{{ path('app_shop') }}" class="col-md decoration-none decoration-hov">Boutique</a>
                             <a href="{{ path('app_cart') }}" class="col-md decoration-none decoration-hov">Panier</a>
-                            <a href="{{ path('app_logout') }}" class="col-md">Se déconnecter</a>
+
+                            <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('logout') }}">
+                            </form>
+                            <a href="#" class="col-md" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Se déconnecter
+                            </a>
                         {% else %}
                         
                             <!-- Utilisateur déconnecté -->
@@ -58,6 +64,7 @@
         {% block shop %}{% endblock %}
         {% block cart %}{% endblock %}
         {% block login %}{% endblock %}
+        {% block register %}{% endblock %}
       </main>
 
       <!-- FOOTER -->
