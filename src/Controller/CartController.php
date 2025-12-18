@@ -24,7 +24,7 @@ class CartController extends AbstractController
 
         $cartService->add($productId, $size);
 
-        return $this->redirectToRoute('cart_show');
+        return $this->redirectToRoute('app_cart');
     }
 
     // Route de suppression d'un produit du panier
@@ -32,7 +32,7 @@ class CartController extends AbstractController
     public function remove(string $key, CartService $cartService): Response
     {
         $cartService->remove($key);
-        return $this->redirectToRoute('cart_show');
+        return $this->redirectToRoute('app_cart');
     }
 
     #[Route('/cart', name: 'app_cart')]
