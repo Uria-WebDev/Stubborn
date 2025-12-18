@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Security\AppAthenticatorAuthenticator;
+use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -12,33 +12,89 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Uid\Uuid;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var string $plainPassword */
-            $plainPassword = $form->get('plainPassword')->getData();
 
-            // encode the plain password
-            $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            // Token email
+            $token = Uuid::v4()->toRfc4122();
+            $user->setEmailVerificationToken($token);
+            $user->setIsVerified(false);
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
+            // Email
+            $confirmationUrl = $this->generateUrl(
+                'app_verify_email',
+                ['token' => $token],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            );
 
-            return $security->login($user, AppAthenticatorAuthenticator::class, 'main');
+            $email = (new Email())
+                ->from('no-reply@stubborn.fr')
+                ->to($user->getEmail())
+                ->subject('Confirmation de votre inscription')
+                ->html("<a href='{$confirmationUrl}'>Confirmer mon inscription</a>");
+
+            $mailer->send($email);
+
+            $this->addFlash('success', 'Un email de confirmation vous a été envoyé.');
+
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('register/index.html.twig', [
             'registrationForm' => $form,
         ]);
+    }
+
+    #[Route('/verify-email/{token}', name: 'app_verify_email')]
+    public function verifyEmail(
+        string $token,
+        EntityManagerInterface $em,
+        Security $security,
+        Request $request
+    ): Response
+    {
+        $user = $em->getRepository(User::class)->findOneBy([
+            'emailVerificationToken' => $token
+        ]);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Token invalide');
+        }
+
+        // Marquer l'utilisateur comme vérifié
+        $user->setIsVerified(true);
+        $user->setEmailVerificationToken(null);
+
+        $em->flush();
+
+        // Connexion automatique
+        return $security->login($user, AppAuthenticator::class, 'main');
     }
 }

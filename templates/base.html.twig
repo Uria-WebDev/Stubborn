@@ -43,7 +43,7 @@
                             <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
                                 <input type="hidden" name="_token" value="{{ csrf_token('logout') }}">
                             </form>
-                            <a href="#" class="col-md" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="#" class="col-md decoration-none decoration-hov" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Se déconnecter
                             </a>
                         {% else %}
