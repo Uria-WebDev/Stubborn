@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -32,6 +31,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Hash du mot de passe
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // Token email
+            // Génération du token de confirmation email
             $token = Uuid::v4()->toRfc4122();
             $user->setEmailVerificationToken($token);
             $user->setIsVerified(false);
@@ -47,18 +47,19 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Email
+            // Création du lien de confirmation
             $confirmationUrl = $this->generateUrl(
                 'app_verify_email',
                 ['token' => $token],
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
 
+            // Envoi du mail
             $email = (new Email())
                 ->from('no-reply@stubborn.fr')
                 ->to($user->getEmail())
                 ->subject('Confirmation de votre inscription')
-                ->html("<a href='{$confirmationUrl}'>Confirmer mon inscription</a>");
+                ->html("<p>Bonjour {$user->getUsername()},</p><p>Veuillez confirmer votre inscription en cliquant sur le lien ci-dessous :</p><p><a href='{$confirmationUrl}'>Confirmer mon inscription</a></p>");
 
             $mailer->send($email);
 
@@ -76,8 +77,7 @@ class RegistrationController extends AbstractController
     public function verifyEmail(
         string $token,
         EntityManagerInterface $em,
-        Security $security,
-        Request $request
+        Security $security
     ): Response
     {
         $user = $em->getRepository(User::class)->findOneBy([
@@ -85,16 +85,21 @@ class RegistrationController extends AbstractController
         ]);
 
         if (!$user) {
-            throw $this->createNotFoundException('Token invalide');
+            $this->addFlash('warning', 'Ce lien est invalide ou a déjà été utilisé.');
+            return $this->redirectToRoute('app_login');
         }
 
-        // Marquer l'utilisateur comme vérifié
+        // Marquer l'utilisateur comme vérifié et supprimer le token
         $user->setIsVerified(true);
         $user->setEmailVerificationToken(null);
-
         $em->flush();
 
-        // Connexion automatique
-        return $security->login($user, AppAuthenticator::class, 'main');
+        // Connexion automatique de l'utilisateur
+        $security->login($user, 'App\Security\AppAuthenticator');
+
+        $this->addFlash('success', 'Votre email a été confirmé. Bienvenue !');
+
+        // Redirection vers la page d'accueil
+        return $this->redirectToRoute('app_home');
     }
 }
