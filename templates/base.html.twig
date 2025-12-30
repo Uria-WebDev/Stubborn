@@ -36,9 +36,21 @@
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
                             <!-- Utilisateur connecté -->
-                            <a href="{{ path('app_home') }}" class="col-md decoration-none decoration-hov">Accueil</a>
-                            <a href="{{ path('app_shop') }}" class="col-md decoration-none decoration-hov">Boutique</a>
-                            <a href="{{ path('app_cart') }}" class="col-md decoration-none decoration-hov">Panier</a>
+                            <a href="{{ path('app_home') }}" class="col-md decoration-none decoration-hov
+                            {{ app.request.attributes.get('_route') == 'app_home' ? 'active' : '' }}">
+                                Accueil
+                            </a>
+
+                            <a href="{{ path('app_shop') }}" class="col-md decoration-none decoration-hov
+                            {{ app.request.attributes.get('_route') == 'app_shop' ? 'active' : '' }}
+                            {{ app.request.attributes.get('_route') == 'app_product' ? 'active' : '' }}">
+                                Boutique
+                            </a>
+
+                            <a href="{{ path('app_cart') }}" class="col-md decoration-none decoration-hov
+                            {{ app.request.attributes.get('_route') == 'app_cart' ? 'active' : '' }}">
+                                Panier
+                            </a>
 
                             <form id="logout-form" action="{{ path('app_logout') }}" method="post" style="display: none;">
                                 <input type="hidden" name="_token" value="{{ csrf_token('logout') }}">
@@ -49,9 +61,20 @@
                         {% else %}
                         
                             <!-- Utilisateur déconnecté -->
-                            <a href="{{ path('app_home') }}" class="col-md decoration-none decoration-hov">Accueil</a>
-                            <a href="{{ path('app_register') }}" class="col-md decoration-none decoration-hov">S’inscrire</a>
-                            <a href="{{ path('app_login') }}" class="col-md decoration-none decoration-hov">Se connecter</a>
+                            <a href="{{ path('app_home') }}" class="col-md decoration-none decoration-hov
+                            {{ app.request.attributes.get('_route') == 'app_home' ? 'active' : '' }}">
+                                Accueil
+                            </a>
+
+                            <a href="{{ path('app_register') }}" class="col-md decoration-none decoration-hov
+                            {{ app.request.attributes.get('_route') == 'app_register' ? 'active' : '' }}">
+                                S’inscrire
+                            </a>
+
+                            <a href="{{ path('app_login') }}" class="col-md decoration-none decoration-hov
+                            {{ app.request.attributes.get('_route') == 'app_login' ? 'active' : '' }}">
+                                Se connecter
+                            </a>
                         {% endif %}
                       </nav>
                   </div>
@@ -65,6 +88,8 @@
         {% block cart %}{% endblock %}
         {% block login %}{% endblock %}
         {% block register %}{% endblock %}
+        {% block admin %}{% endblock %}
+        {% block adminform %}{% endblock %}
       </main>
 
       <!-- FOOTER -->
