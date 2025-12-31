@@ -17,7 +17,9 @@ class ProductType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('price', MoneyType::class)
-            ->add('image', TextType::class);
+            ->add('image', TextType::class, [
+                'required' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

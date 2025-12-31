@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit{% endblock %}
+{% block title %}Stubborn - Ajouter un Produit{% endblock %}
 
-{% block adminform %}
-    <h1>Produit</h1>
+{% block admin %}
+<h1>Produit</h1>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn btn-primary mt-2">Enregistrer</button>
-    {{ form_end(form) }}
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.image) }}
 
-    <a href="{{ path('app_admin') }}" class="btn btn-secondary mt-2">Retour</a>
+    <button class="btn btn-primary mt-2">Enregistrer</button>
+{{ form_end(form) }}
+
+<a href="{{ path('app_admin') }}" class="btn btn-secondary mt-2">Retour</a>
 {% endblock %}
