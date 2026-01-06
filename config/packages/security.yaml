@@ -39,6 +39,8 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS }
+        - { path: ^/payment/success, roles: PUBLIC_ACCESS }
+        - { path: ^/payment/cancel, roles: PUBLIC_ACCESS }
 
         - { path: ^/, roles: ROLE_USER }
 

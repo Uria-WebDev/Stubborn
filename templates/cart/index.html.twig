@@ -57,7 +57,9 @@
         <div class="col-5">
             <div class="row gap-4">
                 <strong class="col border-dark text-center padding-top-10 padding-bottom-10 margin-bottom-0">TOTAL : {{ cart.total }} €</strong>
-                <a href="#" class="col btn btn-primary padding-top-10 padding-bottom-10">FINALISER MA COMMANDE</a>
+                <a href="{{ path('payment_checkout') }}" class="col btn btn-primary padding-top-10 padding-bottom-10">
+                    FINALISER MA COMMANDE
+                </a>
             </div>
 
             <div class="row gap-4 margin-top-20">
