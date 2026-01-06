@@ -7,6 +7,7 @@ use Stripe\Checkout\Session;
 
 class StripeService
 {
+    // Configuration du service Stripe
     public function __construct(string $stripeSecretKey)
     {
         Stripe::setApiKey($stripeSecretKey);

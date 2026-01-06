@@ -3,10 +3,14 @@
 {% block title %}Stubborn - Back Office{% endblock %}
 
 {% block admin %}
+
+    <!-- PAGE BACK OFFICE -->
     <h1>Back Office</h1>
 
+    <!-- Redirection vers la page de création de produit -->
     <a href="{{ path('admin_product_new') }}" class="btn btn-success mb-3">Ajouter un produit</a>
 
+    <!-- Liste des produits -->
     <table class="table table-bordered">
         <thead>
             <tr>

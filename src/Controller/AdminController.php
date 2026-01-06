@@ -12,10 +12,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class AdminController extends AbstractController
 {
+    // Route de la page admin
     #[Route('/admin', name: 'app_admin')]
     public function index(EntityManagerInterface $em): Response
     {
-        // Récupérer tous les produits
         $products = $em->getRepository(Product::class)->findAll();
 
         return $this->render('admin/index.html.twig', [
@@ -23,6 +23,7 @@ final class AdminController extends AbstractController
         ]);
     }
 
+    // Route de création d'un nouveau produit
     #[Route('/admin/product/new', name: 'admin_product_new')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
@@ -43,6 +44,7 @@ final class AdminController extends AbstractController
         ]);
     }
 
+    // Route de modification d'un produit
     #[Route('/admin/product/{id}/edit', name: 'admin_product_edit')]
     public function edit(Product $product, Request $request, EntityManagerInterface $em): Response
     {
@@ -60,6 +62,7 @@ final class AdminController extends AbstractController
         ]);
     }
 
+    // Route de suppression d'un produit
     #[Route('/admin/product/{id}/delete', name: 'admin_product_delete', methods: ['POST'])]
     public function delete(Product $product, Request $request, EntityManagerInterface $em): Response
     {

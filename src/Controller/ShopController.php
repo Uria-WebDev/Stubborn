@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ShopController extends AbstractController
 {
+    // Route de la page de la boutique
     #[Route('/shop', name: 'app_shop')]
     public function index(Request $request, EntityManagerInterface $em): Response
     {
@@ -18,7 +19,7 @@ final class ShopController extends AbstractController
 
         $repo = $em->getRepository(Product::class);
 
-        // Tri par tranche de prix
+        // Tri des produits par tranche de prix
         if (!$range) {
             $products = $repo->findAll();
         } else {

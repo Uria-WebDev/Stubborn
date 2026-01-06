@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class LogoutController extends AbstractController
 {
+    // Route de déconection de l'utilisateur
     #[Route('/logout', name: 'app_logout')]
     public function index(): Response
     {
