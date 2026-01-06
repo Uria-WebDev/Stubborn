@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AbstractController
 {
+    // Route de payement via Stripe
     #[Route('/payment/checkout', name: 'payment_checkout')]
     public function checkout(
         CartService $cartService,
@@ -27,12 +28,14 @@ class PaymentController extends AbstractController
         return new RedirectResponse($session->url);
     }
 
+    // Route de validation de payement
     #[Route('/payment/success', name: 'payment_success')]
     public function success(): Response
     {
         return $this->render('payment/success.html.twig');
     }
 
+    // Route d'annulation de payement
     #[Route('/payment/cancel', name: 'payment_cancel')]
     public function cancel(): Response
     {

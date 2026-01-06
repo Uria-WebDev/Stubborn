@@ -3,6 +3,8 @@
 {% block title %}Stubborn - {{ product.name }}{% endblock %}
 
 {% block shop %}
+
+<!-- PAGE POUR CHAQUES PRODUITS -->
 <div class="row gap-4">
 
     <div class="col-md-5">
@@ -27,6 +29,7 @@
             <div class="col-md-5">
                 <p><strong>Tailles</strong></p>
 
+                <!-- Séléction de la taille du produit -->
                 <ul class="list-group">
                     {% for size in product.sizes %}
                         <a href="#" class="list-group-item size-item" data-size="{{ size.label }}">
@@ -47,6 +50,7 @@
             </div>
         </div>
 
+        <!-- Formulaire pour l'ajout du produit au panier -->
         <form action="{{ path('cart_add') }}" method="POST">
             <input type="hidden" name="product_id" value="{{ product.id }}">
             <input type="hidden" name="size" id="selected-size">

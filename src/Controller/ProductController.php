@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ProductController extends AbstractController
 {
+    // Route pour chaque produits
     #[Route('/product/{id}', name: 'app_product')]
     public function show(Product $product): Response
     {

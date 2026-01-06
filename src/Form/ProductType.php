@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
 {
+    // Formulaire de création de produit
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

@@ -4,6 +4,8 @@
 
 {% block cart %}
 
+    <!-- PAGE DU PANIER -->
+
     <!-- Produits du panier -->
     <div class="margin-top-10">
         {% if cart.items is empty %}
@@ -51,10 +53,11 @@
         {% endif %}
     </div>
 
-    <!-- Actions du panier -->
     <div class="row margin-bottom-10">
         <div class="col-7"></div>
         <div class="col-5">
+
+            <!-- Redirection vers la page de payement -->
             <div class="row gap-4">
                 <strong class="col border-dark text-center padding-top-10 padding-bottom-10 margin-bottom-0">TOTAL : {{ cart.total }} €</strong>
                 <a href="{{ path('payment_checkout') }}" class="col btn btn-primary padding-top-10 padding-bottom-10">
@@ -62,6 +65,7 @@
                 </a>
             </div>
 
+            <!-- Redirection vers la page de la boutique -->
             <div class="row gap-4 margin-top-20">
                 <div class="col"></div>
                 <a href="{{ path('app_shop') }}" class="col btn btn-primary padding-top-10 padding-bottom-10">CONTINUER MES ACHATS</a>

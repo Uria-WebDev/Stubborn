@@ -4,6 +4,8 @@
 
 {% block login %}
 
+<!-- PAGE DE CONNECTION -->
+
 <div class="row">
     <div class="col-4"></div>
 
@@ -17,23 +19,28 @@
             </div>
         {% endif %}
 
+        <!-- Nom d'utilisateur -->
         <div class="margin-top-20">
             <label for="inputUsername">Nom d'utilisateur</label><br>
             <input type="text" name="_username" id="inputUsername" value="{{ last_username }}" class="form-control" autocomplete="username" required autofocus>
         </div>
 
+        <!-- Mot de passe -->
         <div class="margin-top-20">
             <label for="inputPassword">Mot de passe</label><br>
             <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
         </div>
 
+        <!-- Token (invisible) -->
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
+        <!-- Récupération du mot de passe (inactif) -->
         <div class="margin-top-20 padding-bottom-20 border-bottom-blue text-center">
             <button type="submit" class="btn btn-primary">Se Connecter</button><br>
             <a href="#"><small>Mot de passe oublié ?</small></a>
         </div>
 
+        <!-- Redirection vers la page d'inscription -->
         <div class="margin-top-20">
             <p class="margin-bottom-0">Pas encore inscrit ?</p><br>
             <div class="text-center">

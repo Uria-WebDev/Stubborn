@@ -18,6 +18,7 @@ use Symfony\Component\Uid\Uuid;
 
 class RegistrationController extends AbstractController
 {
+    // Route de la page d'inscription
     #[Route('/register', name: 'app_register')]
     public function register(
         Request $request,
@@ -54,7 +55,7 @@ class RegistrationController extends AbstractController
                 UrlGeneratorInterface::ABSOLUTE_URL
             );
 
-            // Envoi du mail
+            // Envoi du mail de confirmation
             $email = (new Email())
                 ->from('no-reply@stubborn.fr')
                 ->to($user->getEmail())
