@@ -15,6 +15,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Uid\Uuid;
+use App\Security\AppAuthenticator;
 
 class RegistrationController extends AbstractController
 {
@@ -78,9 +79,9 @@ class RegistrationController extends AbstractController
     public function verifyEmail(
         string $token,
         EntityManagerInterface $em,
-        Security $security
-    ): Response
-    {
+        Security $security,
+        Request $request
+    ): Response {
         $user = $em->getRepository(User::class)->findOneBy([
             'emailVerificationToken' => $token
         ]);
@@ -90,17 +91,20 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // Marquer l'utilisateur comme vérifié et supprimer le token
+        // Marque l'utilisateur comme vérifié
         $user->setIsVerified(true);
         $user->setEmailVerificationToken(null);
         $em->flush();
 
-        // Connexion automatique de l'utilisateur
-        $security->login($user, 'App\Security\AppAuthenticator');
+        // Connection automatique
+        $security->login(
+            $user,
+            AppAuthenticator::class,
+            'main'
+        );
 
         $this->addFlash('success', 'Votre email a été confirmé. Bienvenue !');
 
-        // Redirection vers la page d'accueil
         return $this->redirectToRoute('app_home');
     }
 }
